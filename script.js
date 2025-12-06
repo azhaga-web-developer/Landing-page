@@ -1,17 +1,9 @@
 async function fetchQuote() {
   try {
-    const response = await fetch("https://type.fit/api/quotes");
+    const response = await fetch("https://zenquotes.io/api/random");
     const data = await response.json();
-
-    const randomIndex = Math.floor(Math.random() * data.length);
-    const randomQuote = data[randomIndex];
-
-    const quoteElement = document.getElementById("quote");
-    quoteElement.style.opacity = 0;
-    setTimeout(() => {
-      quoteElement.textContent = `"${randomQuote.text}" — ${randomQuote.author || "Unknown"}`;
-      quoteElement.style.opacity = 1;
-    }, 300);
+    document.getElementById("quote").textContent =
+      `"${data[0].q}" — ${data[0].a}`;
   } catch (error) {
     document.getElementById("quote").textContent = "Could not load quote.";
     console.error(error);
