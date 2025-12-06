@@ -1,14 +1,15 @@
-// Fetch inspirational quotes
 async function fetchQuote() {
   try {
-    const response = await fetch("https://api.quotable.io/random");
+    const response = await fetch("https://type.fit/api/quotes");
     const data = await response.json();
-    const quoteElement = document.getElementById("quote");
 
-    // Fade-in animation
+    const randomIndex = Math.floor(Math.random() * data.length);
+    const randomQuote = data[randomIndex];
+
+    const quoteElement = document.getElementById("quote");
     quoteElement.style.opacity = 0;
     setTimeout(() => {
-      quoteElement.textContent = `"${data.content}" — ${data.author}`;
+      quoteElement.textContent = `"${randomQuote.text}" — ${randomQuote.author || "Unknown"}`;
       quoteElement.style.opacity = 1;
     }, 300);
   } catch (error) {
@@ -17,10 +18,7 @@ async function fetchQuote() {
   }
 }
 
-// Load first quote
 fetchQuote();
-
-// Auto-refresh every 30 seconds
 setInterval(fetchQuote, 30000);
 
 // Form validation
